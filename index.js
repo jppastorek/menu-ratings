@@ -14,13 +14,14 @@ let db = new sqlite3.Database(
         console.error(err);
         return;
       }
-      db.exec(data);
-    });
-    db.close((err) => {
-      if (err) {
-        console.log(err.message);
-      }
-      console.log("Closed the database connection.");
+      db.exec(data, (err) => {
+        db.close((err) => {
+          if (err) {
+            console.log(err.message);
+          }
+          console.log("Closed the database connection.");
+        });
+      });
     });
   }
 );
