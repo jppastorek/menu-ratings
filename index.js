@@ -14,6 +14,7 @@ let db = new sqlite3.Database(
         console.error(err);
         return;
       }
+      console.log(data);
       db.exec(data, (err) => {
         db.close((err) => {
           if (err) {
