@@ -42,51 +42,51 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  IF NOT EXISTS menuItems (
-    id INTEGER PRIMARY KEY,
-    menu_id INTEGER,
-    FOREIGN KEY (menu_id) REFERENCES menus (menu_id),
-    item_id INTEGER,
-    FOREIGN KEY (item_id) REFERENCES items (item_id)
-  );
-
-CREATE TABLE
   IF NOT EXISTS items (
     item_id INTEGER PRIMARY KEY,
     item_name TEXT NOT NULL,
     restaurant_id INTEGER,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id),
     price INTEGER NOT NULL,
-    item_description TEXT NOT NULL
+    item_description TEXT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id)
+  );
+
+CREATE TABLE
+  IF NOT EXISTS menuItems (
+    id INTEGER PRIMARY KEY,
+    menu_id INTEGER,
+    item_id INTEGER,
+    FOREIGN KEY (item_id) REFERENCES items (item_id),
+    FOREIGN KEY (menu_id) REFERENCES menus (menu_id)
   );
 
 CREATE TABLE
   IF NOT EXISTS ratings (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
     item_id INTEGER,
-    FOREIGN KEY (item_id) REFERENCES items (item_id),
     rating INTEGER NOT NULL,
     comment TEXT,
-    dateCreated datetime
+    dateCreated datetime,
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (item_id) REFERENCES items (item_id)
   );
 
 CREATE TABLE
   IF NOT EXISTS savedItems (
     id INTEGER PRIMARY KEY,
     item_id INTEGER,
-    FOREIGN KEY (item_id) REFERENCES items (item_id),
     user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    dateSaved datetime
+    dateSaved datetime,
+    FOREIGN KEY (item_id) REFERENCES items (item_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
   );
 
 CREATE TABLE
   IF NOT EXISTS favoriteRestaurants (
     id INTEGER PRIMARY KEY,
     restaurant_id INTEGER,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id),
     user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id)
   );
