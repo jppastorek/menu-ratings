@@ -1,6 +1,7 @@
-const sqlite3 = require("sqlite3").verbose();
-const fs = require("fs");
-import User from "./User";
+// const sqlite3 = require("sqlite3").verbose();
+// const fs = require("fs");
+// import User from "./User.js";
+const User = require("./User");
 
 const userController = new User('./restaurant.db');
 

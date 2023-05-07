@@ -1,12 +1,15 @@
 const sqlite3 = require("sqlite3").verbose();
 
-export default class User {
+
+
+
+class User {
   constructor(db) {
     db = this.db;
   }
 
   addNewUser(firstName, lastName, email, password, residence) {
-    let db = new Database(`${this.db}`, sqlite3.OPEN_READWRITE, (err) => {
+    let db = new sqlite3.Database(`${this.db}`, sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
         return console.error(err.message);
       }
@@ -33,3 +36,6 @@ export default class User {
     });
   }
 }
+
+
+module.exports = User;
