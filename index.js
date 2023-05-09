@@ -1,13 +1,15 @@
 // const sqlite3 = require("sqlite3").verbose();
 // const fs = require("fs");
-// import User from "./User.js";
-const path = require('node:path');
-const User = require("./User");
+import User from "./User.js";
 
 
-const userController = new User(path.resolve(__dirname, 'restaurant.db'));
 
-let user_id = userController.addNewUser('Thomas', 'Constant', 'tconstant@gmail.com', 'ollfkdEE34f@', 'New Orleans');
+
+
+// const userController = new User(path.resolve(__dirname, 'restaurant.db'));
+const userController = new User('./restaurant.db');
+
+let user_id = userController.addNewUser('Guy', 'Weigel', 'gweigel@gmail.com', 'asvvcf2f@', 'New Orleans');
 console.log(user_id);
 
 // let db = new sqlite3.Database(
