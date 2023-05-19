@@ -62,7 +62,7 @@ CREATE TABLE
 
 CREATE TABLE
   IF NOT EXISTS ratings (
-    id INTEGER PRIMARY KEY,
+    rating_id INTEGER PRIMARY KEY,
     user_id INTEGER,
     item_id INTEGER,
     rating INTEGER NOT NULL,
