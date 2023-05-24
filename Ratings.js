@@ -32,8 +32,9 @@ export default class Ratings {
         `INSERT INTO ratings (user_id, item_id, rating, comment, dateCreated)
               VALUES ('${user_id}', '${item_id}', '${rating}', '${comment}', '${dateCreated}');`
       );
-    }else { //log the error!
-      console.error("You already rated this item!")
+    } else {
+      //log the error!
+      console.error("You already rated this item!");
     }
 
     await db.close();
@@ -46,13 +47,14 @@ export default class Ratings {
       FROM ratings
       WHERE rating_id = ${rating_id};
     `);
+    await db.close();
     return result;
   }
 
   async deleteRating(rating_id) {
     let db = await this.openDB();
     await db.run(`
-      DELETE FROM ratings WHERE rating_id = ${rating_id};
+      DELETE FROM ratings WHERE rating_id = '${rating_id}';
     `);
     await db.close();
   }
@@ -65,5 +67,15 @@ export default class Ratings {
     rating,
     comment,
     dateCreated
-  ) {}
+  ) {
+    let db = await this.openDB();
+    let result = await db.exec(
+      `UPDATE ratings
+      SET rating = '${rating}', comment = '${comment}', dateCreated = '${dateCreated}'
+      WHERE rating_id = '${rating_id}'
+      `
+    );
+    await db.close();
+    return result;
+  }
 }
