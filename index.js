@@ -17,13 +17,13 @@ const itemController = new Item(db);
 
 // console.log(newUser.lastID);
 
-let newRating = await ratingController.addRating(
-'6', '5', 1, 'dis ish is nasty!', Date.now()
-);
+// let newRating = await ratingController.addRating(
+// '6', '5', 1, 'dis ish is nasty!', Date.now()
+// );
 
-let newRating2 = await ratingController.addRating(
-    '13', '5', 2, 'its really ok...', Date.now()
-    );
+// let newRating2 = await ratingController.addRating(
+//     '13', '5', 2, 'its really ok...', Date.now()
+//     );
 
 
 // console.log(newRating);
