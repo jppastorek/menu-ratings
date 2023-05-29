@@ -33,6 +33,7 @@ export default class User {
       FROM users
       WHERE user_id = '${user_id}'
     `);
+    return result;
   }
 
   async updateUser(user_id, firstName, lastName, email, password, residence) {

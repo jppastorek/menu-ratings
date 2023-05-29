@@ -1,38 +1,52 @@
 import User from "./User.js";
 import Ratings from "./Ratings.js";
 import Item from "./Item.js";
+import express from "express";
+import * as path from "path";
+const port = 3000;
 const db = "./restaurant.db";
-
 const userController = new User(db);
 const ratingController = new Ratings(db);
 const itemController = new Item(db);
-
-// let newUser = await userController.addNewUser(
-//   "Ringo",
-//   "Starr",
-//   "rstarr@gmail.com",
-//   "beatlefanboy123",
-//   "Liverpool"
-// );
-
-// console.log(newUser.lastID);
-
-// let newRating = await ratingController.addRating(
-// '6', '5', 1, 'dis ish is nasty!', Date.now()
-// );
-
-// let newRating2 = await ratingController.addRating(
-//     '13', '5', 2, 'its really ok...', Date.now()
-//     );
+const app = express();
+import * as http from "http";
+import bodyParser from "body-parser";
+app.use(bodyParser.json());
+const jsonParser = bodyParser.json();
 
 
-// console.log(newRating);
+//-----------------------------------USER---------------------------------
 
-// console.log(await ratingController.getRating('1'));
+//GET USER
+app.get("/api/user/:id", async (req, res) => {
+  res.send(await userController.getUser(req.params["id"]));
+});
 
-// await ratingController.deleteRating('2');
+//POST USER
+app.post("/api/user", jsonParser, async (req, res) => {
+  let id = userController.addNewUser(
+    req.body.first_name,
+    req.body.last_name,
+    req.body.email,
+    req.body.password,
+    req.body.residence
+  );
+  res.send(
+    `Successfully added ${req.body.first_name} ${req.body.last_name} at ID ${
+      (await id).lastID
+    }.`
+  );
+});
+
+//DELETE USER
+app.delete("/api/user/:id", async (req, res) => {
+  res.send(await userController.deleteUser(req.params["id"]));
+});
 
 
-let averageRating = await itemController.getAverageRating('5');
+//------------------------------------RATING-----------------------------
 
-console.log(averageRating);
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
