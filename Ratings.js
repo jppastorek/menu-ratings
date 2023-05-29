@@ -28,7 +28,7 @@ export default class Ratings {
 
     //if it doesn't exist, add a new rating
     if (!ratingExists) {
-      await db.exec(
+      var result = await db.run(
         `INSERT INTO ratings (user_id, item_id, rating, comment, dateCreated)
               VALUES ('${user_id}', '${item_id}', '${rating}', '${comment}', '${dateCreated}');`
       );
@@ -36,8 +36,8 @@ export default class Ratings {
       //log the error!
       console.error("You already rated this item!");
     }
-
     await db.close();
+    return result;
   }
 
   async getRating(rating_id) {
