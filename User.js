@@ -36,11 +36,11 @@ export default class User {
     return result;
   }
 
-  async updateUser(user_id, firstName, lastName, email, password, residence) {
+  async updateUser(user_id, column, newData) {
     let db = await this.openDB();
     const result = await db.run(`
       UPDATE users
-      SET first_name = '${firstName}', last_name = '${lastName}', email = '${email}', password = '${password}', residence = '${residence}'
+      SET ${column} = '${newData}
       WHERE user_id = '${user_id};
     `);
     await db.close();

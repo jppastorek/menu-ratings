@@ -2,18 +2,21 @@ import User from "./User.js";
 import Ratings from "./Ratings.js";
 import Item from "./Item.js";
 import express from "express";
-import * as path from "path";
 const port = 3000;
 const db = "./restaurant.db";
 const userController = new User(db);
 const ratingController = new Ratings(db);
 const itemController = new Item(db);
 const app = express();
-import * as http from "http";
 import bodyParser from "body-parser";
 app.use(bodyParser.json());
 const jsonParser = bodyParser.json();
+const index = "/home/jp/WebDev/menu-ratings/index.html";
+app.use(express.static("/home/jp/WebDev/menu-ratings"));
 
+app.get("/", (req, res) => {
+  res.sendFile(index);
+});
 
 //-----------------------------------USER---------------------------------
 
@@ -43,7 +46,6 @@ app.delete("/api/user/:id", async (req, res) => {
   res.send(await userController.deleteUser(req.params["id"]));
 });
 
-
 //------------------------------------RATING-----------------------------
 
 //GET RATING
@@ -61,16 +63,13 @@ app.post("/api/rating", jsonParser, async (req, res) => {
     req.body.comment,
     date
   );
-  res.send(
-    `Successfully added rating at ${date}.`
-  );
+  res.send(`Successfully added rating at ${date}.`);
 });
 
 //DELETE RATING
 app.delete("/api/rating/:id", async (req, res) => {
   res.send(await ratingController.deleteRating(req.params["id"]));
 });
-
 
 //-----------------------------------LISTEN------------------------------
 
